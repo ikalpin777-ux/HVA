@@ -824,7 +824,16 @@ function bindAll(){
     <div class="login-field"><label>Email</label><input type="email" id="login-email" placeholder="you@company.com" autocomplete="email"></div>
     <div class="login-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
     <div class="login-error" id="login-error"></div>
-    <button type="button" class="login-btn" id="login-btn" onclick="if(window._hvaLogin)window._hvaLogin()">Sign in</button>
+    <button type="button" class="login-btn" id="login-btn">Sign in</button>
+    <script>
+      document.getElementById('login-btn').addEventListener('click', function() {
+        if(window._hvaLogin) window._hvaLogin();
+        else document.getElementById('login-error').textContent = 'App still loading — try again in a moment.', document.getElementById('login-error').className='login-error show';
+      });
+      ['login-email','login-password'].forEach(function(id){
+        document.getElementById(id).addEventListener('keydown', function(ev){ if(ev.key==='Enter' && window._hvaLogin) window._hvaLogin(); });
+      });
+    </script>
   </div>
 </div>
 
